@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora IMC</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            border: 1px solid #232323;
+            padding: 10px;
+        }
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .coluna {
+            display: flex;
+            flex-direction: column;
+        }
+       
+        .btn {
+             margin-top: 10px;
+            /* text-transform: uppercase;
+            background-color:rgba(74, 240, 102,.8);
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 700;
+            height: 25px;
+            cursor: pointer; */ 
+        }
+        .saidaPrograma {
+            width: 380px;
+            height: 200px;
+            background-color: #232323;
+            color: #fff;
+            border-radius: 25px;
+            margin-top: 10px;
+        }
+        form#formulario {
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
+    <script>
+        var imc;
+        var resultado;
+        function calculaDados(){
+                let form = document.getElementById("formulario"); //pego a referencia do form
+                let altura = form.elements[1].value;
+                let peso = form.elements[2].value;
+                imc = peso / (altura/100)**2;
+                return Math.round(imc);
+        }
+        var tmp = document.addEventListener("submit",e => {
+                        e.preventDefault() // evito que a página carregue
+                        console.log('Deu certo');
+                        resultado = calculaDados();
+                        var saidaPrograma = document.querySelector('.saidaPrograma');
+                        let form = document.getElementById("formulario");
+                        let nome = form.elements[0].value;
+                        saidaPrograma.innerHTML = "<h1>" + nome + "</h1>" + "<br/>" + "<p>Seu IMC: " + resultado + "</p>";
+        });
+    </script>
+</head>
+<body>
+    <div class="container center coluna">
+        <h1>Calculo de IMC com Javascript</h1>
+        <form action="#" method="post" id="formulario">
+            <label>Nome</label><input type="text" name="nome" id="nomeUsuario">
+            <label>Altura:</label><input type="number" name="altura" id="alturaUsuario">
+            <label>Peso:</label><input type="number" name="peso" id="pesoUsuario">
+            <button type="submit" class="btn">Calcular</button>
+        </form>
+        <div class="saidaPrograma center coluna">
+
+        </div>
+    </div>
+
+    
+</body>
+</html>
