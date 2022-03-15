@@ -1,0 +1,9 @@
+#1 já foi 
+
+#2 -- Tranformação do projeto em orientação a objetos
+Criação da classe pessoa
+instanciação da classe
+exibição dos dados da pessoa que digitou os valores na tela
+estilização do css3
+
+

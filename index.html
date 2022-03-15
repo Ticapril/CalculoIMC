@@ -10,8 +10,12 @@
             box-sizing: border-box;
         }
         .container {
-            border: 1px solid #232323;
-            padding: 10px;
+            border: 2px solid #232323;
+            /* padding: 10px; */
+            background-color: rgb(255, 255, 4);
+            border-radius: 25px;
+            box-shadow: 1px 5px 5px #232323;
+            width: 300px;
         }
         .center {
             display: flex;
@@ -25,32 +29,120 @@
        
         .btn {
              margin-top: 10px;
-            /* text-transform: uppercase;
-            background-color:rgba(74, 240, 102,.8);
-            border: none;
-            border-radius: 25px;
+            background: #000;
             color: #fff;
-            font-weight: 700;
-            height: 25px;
-            cursor: pointer; */ 
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+           
         }
         .saidaPrograma {
-            width: 380px;
+            width: 250px;
             height: 200px;
-            background-color: #232323;
+            background-color: #000;
             color: #fff;
             border-radius: 25px;
-            margin-top: 10px;
+            margin: 20px;
         }
         form#formulario {
             display: flex;
             flex-direction: column;
         }
+        form#formulario input {
+            align-items: flex-end;
+        }
+        .border {
+            border-bottom: 4px solid #000;
+            display: block;
+            width: 100%;
+        }
+        .box {
+            display: flex;
+           
+        }
+        .row {
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        div.saidaPrograma {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        table.tabelaPessoas, td, th, tfoot {border:solid 1px #000; padding:5px;}
 
     </style>
+    
+</head>
+<body>
+    <div class="container center coluna">
+            <!-- parte 1  -->
+            <h1 class="border" style="text-align: center;">Calculadora - IMC</h1>
+            <!-- parte 2 -->
+            <form action="#" method="post" id="formulario">
+                <div class="box row">
+                    <label>Nome</label><input  type="text" name="nome" id="nomeUsuario">
+                </div>
+                <div class="box row">
+                    <label>Altura:</label><input  type="number" name="altura" id="alturaUsuario">
+                </div>
+               <div class="box row">
+                 <label>Peso:</label><input  type="number" name="peso" id="pesoUsuario">
+               </div>
+                
+               <button type="submit" class="btn">Calcular</button>
+            </form>
+            
+        <div class="saidaPrograma">
+
+
+            
+        </div>
+        <div class="listagemPessoas">
+            <h2>IMCS - Cadastrados</h2>
+            <table></table>
+        </div>
+    </div>
+
     <script>
+        // criação da classe pessoa
+        class Pessoa{
+            constructor(name,weight,height){
+                this.name = name;
+                this.weight = weight;
+                this.height = height;
+            }
+        };
+        
+        function criaUsuario(idUser){
+            let pessoas = [];
+            let name = getName();
+            let height = getHeight();
+            let weight = getWeight();
+            pessoas[idUser] = new Pessoa(name,height,weight);
+            return pessoas;
+        }
+        
         var imc;
         var resultado;
+        var quantidadeSubmits = 0;
+        var listagemPessoas;
+        function getName(){
+            let form =  document.getElementById("formulario"); //pego a referencia do form
+            let nome = form.elements[0].value;
+            return nome;
+        }
+        function getHeight(){
+            let form =  document.getElementById("formulario"); //pego a referencia do form
+            let altura = form.elements[1].value;
+            return altura;
+        }
+        function getWeight(){
+            let form =  document.getElementById("formulario"); //pego a referencia do form
+            let peso = form.elements[2].value;
+            return peso;
+        }
         function calculaDados(){
                 let form = document.getElementById("formulario"); //pego a referencia do form
                 let altura = form.elements[1].value;
@@ -59,6 +151,7 @@
                 return Math.round(imc);
         }
         var tmp = document.addEventListener("submit",e => {
+                        listagemPessoas = criaUsuario(quantidadeSubmits);
                         e.preventDefault() // evito que a página carregue
                         console.log('Deu certo');
                         resultado = calculaDados();
@@ -66,23 +159,12 @@
                         let form = document.getElementById("formulario");
                         let nome = form.elements[0].value;
                         saidaPrograma.innerHTML = "<h1>" + nome + "</h1>" + "<br/>" + "<p>Seu IMC: " + resultado + "</p>";
-        });
+                        mostrarLista = document.querySelector('.listagemPessoas table');
+                        console.log(mostrarLista);
+                        var mostrarLista;
+                        mostrarLista.innerHTML = "<tr><th>Nome</th><th>Altura</th><th>Peso</th></tr><tr><td>" + listagemPessoas[quantidadeSubmits].name + "</td><td>" + listagemPessoas[quantidadeSubmits].height + "</td><td>" + listagemPessoas[quantidadeSubmits].weight + "</td><tr>"; 
+                        quantidadeSubmits++;
+                    });
     </script>
-</head>
-<body>
-    <div class="container center coluna">
-        <h1>Calculo de IMC com Javascript</h1>
-        <form action="#" method="post" id="formulario">
-            <label>Nome</label><input type="text" name="nome" id="nomeUsuario">
-            <label>Altura:</label><input type="number" name="altura" id="alturaUsuario">
-            <label>Peso:</label><input type="number" name="peso" id="pesoUsuario">
-            <button type="submit" class="btn">Calcular</button>
-        </form>
-        <div class="saidaPrograma center coluna">
-
-        </div>
-    </div>
-
-    
 </body>
 </html>
